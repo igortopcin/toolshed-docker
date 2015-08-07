@@ -25,10 +25,9 @@ This docker image has already been bootstrapped, that is, it contains all the ne
 We run sqllite database. However, if you prefer using postgres as your database, you can easily extend this Dockerfile, recreate the contents of ``/data/`` and redo the bootstrapping process (see the Dockerfile for more information). You will propably want to change some of the configuration parameters in ``config/tool_shed.ini`` before running the bootstrapping script - see ``config/bootstrap.sh`` as a suggestion of bootstrap script.
 
 ## Mounting ``/data``
-If you choose to mount /data, you will need to re-do the bootstrapping by hand. To do so, just do the following:
+If you choose to mount /data, you will need to re-do the bootstrapping by hand. To do so, first you must run the container (see sections above), then just do the following:
 ```shell
-# first: run the container...
-
+docker exec toolshed ./bootstrap.sh
 ```
 
 ## Setting up a dedicated postgres database
@@ -37,7 +36,7 @@ Create a new user for Toolshed in your postgres:
 su postgres
 
 createuser -P toolshed
-#choose a password for xnat user and then retype it.
+#choose a password for toolshed user and then retype it.
 
 createdb -O toolshed toolshed
 ```
