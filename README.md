@@ -27,7 +27,10 @@ We run sqllite database. However, if you prefer using postgres as your database,
 ## Mounting ``/data``
 If you choose to mount /data, you will need to re-do the bootstrapping by hand. To do so, first you must run the container (see sections above), then just do the following:
 ```shell
-docker exec toolshed ./bootstrap.sh
+docker run --name toolshed \
+    -v /data/on/host:/data \
+    --entrypoint ./bootstrap.sh \
+    toolshed
 ```
 
 ## Setting up a dedicated postgres database
@@ -53,7 +56,10 @@ database_connection = postgresql://toolshed:password@postgres:5432/toolshed
 Then rebuild the container by running ``docker build -t toolshed .`` and after that you may bootstrap your newly created database:
 
 ```shell
-docker exec toolshed ./bootstrap.sh
+docker run --name toolshed \
+    -v /data/on/host:/data \
+    --entrypoint ./bootstrap.sh \
+    toolshed
 ```
 
 This process may take a while to complete.
@@ -67,3 +73,4 @@ docker run -d --name toolshed --link postgres -p 9009:9009 toolshed
 ```shell
 docker run -d --name toolshed --add-host postgres:10.8.0.26 -p 9009:9009 toolshed
 ```
+
